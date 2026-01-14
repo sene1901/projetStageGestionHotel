@@ -50,17 +50,7 @@ const Register = () => {
             </label>
             <input
               type="email"
-              className="
-                w-full
-                border-0
-                border-b
-                border-gray-300
-                py-2
-                text-sm
-                focus:outline-none
-                focus:ring-0
-                focus:border-gray-700
-              "
+              className=" w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline focus:rin focus:border-gray-700 "
             />
           </div>
 
@@ -71,17 +61,14 @@ const Register = () => {
             </label>
             <input
               type="password"
-              className="
-                w-full
-                border-0
-                border-b
-                border-gray-300
+              className="  w-full  border-0 border-b border-gray-300
                 py-2
                 text-sm
                 focus:outline-none
                 focus:ring-0
                 focus:border-gray-700
               "
+                
             />
           </div>
 

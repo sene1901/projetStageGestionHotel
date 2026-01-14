@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ForgotPassword = () => {
+const MotDePasseOublie = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 px-4">
       
@@ -73,4 +73,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default MotDePasseOublie;

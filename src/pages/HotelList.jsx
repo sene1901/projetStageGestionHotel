@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HotelCard from "../components/HotelCard";
 import terroubi from "../assets/images/téléchargement.jfif";
 import kingfahd from "../assets/images/téléchargement.jfif";
@@ -8,58 +8,60 @@ import lacrose from "../assets/images/téléchargement.jfif";
 import saly from "../assets/images/téléchargement.jfif";
 import palmbeach from "../assets/images/téléchargement.jfif";
 import place from "../assets/images/téléchargement.jfif";
+import AjoutHotelModal from "../components/AjoutModalHotel";
+
 const hotels = [
   {
    
-    address: "Boulevard Martin Luther King, Dakar",
+    addresse: "Boulevard Martin Luther King, Dakar",
      nom: "Hôtel Terrou-Bi",
     prix: "25.000",
     image: terroubi,
   },
   {
    
-    address: "Rte des Almadies, Dakar",
+    addresse: "Rte des Almadies, Dakar",
      nom: "King Fahd Palace",
     prix: "20.000",
     image: kingfahd,
   },
   {
     
-    address: "Route de la Corniche, Dakar",
+    addresse: "Route de la Corniche, Dakar",
     nom: "Radisson Blu Hotel",
     prix: "22.000",
     image: radisson,
   },
   {
    
-    address: "Place de l’Indépendance",
+    addresse: "Place de l’Indépendance",
      nom: "Pullman Dakar Teranga",
     prix: "30.000",
     image: pullman,
   },
   {
     nom: "Hôtel Lac Rose",
-    address: "Lac Rose, Dakar",
+    addresse: "Lac Rose, Dakar",
     prix: "25.000",
     image: lacrose,
   },
   {
    
-    address: "Mbour, Sénégal",
+    addresse: "Mbour, Sénégal",
      nom: "Hôtel Saly",
     prix: "20.000",
     image: saly,
   },
   {
     
-    address: "BP64, Saly 23000",
+    addresse: "BP64, Saly 23000",
     nom: "Palm Beach Resort & Spa",
     prix: "22.000",
     image: palmbeach,
   },
   {
   
-    address: "Place de l’Indépendance, Dakar",
+    addresse: "Place de l’Indépendance, Dakar",
     nom: "Pullman Dakar Teranga",
     prix: "30.000",
     image: place,
@@ -67,6 +69,8 @@ const hotels = [
 ];
 
 const HotelList = () => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div className="flex  min-h-screen">
       
@@ -82,10 +86,17 @@ const HotelList = () => {
               Hôtels <span className="text-gray-400">{hotels.length}</span>
             </h2>
 
-            <button className="bg-white border px-4 py-2 rounded text-sm hover:bg-gray-50">
-              + Créer un nouveau hôtel
-            </button>
-          </div>
+           <button
+                onClick={() => setOpenModal(true)}
+                className="bg-white text-gray-800 px-4 py-2 rounded-md border"
+              >
+                Creér un nouveau Hotel
+              </button>
+
+            {openModal && <AjoutHotelModal onClose={() => setOpenModal(false)} />}
+          
+          
+            </div>
 
           {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6  px-5 justify-items-center">
@@ -93,7 +104,7 @@ const HotelList = () => {
               <HotelCard
                 key={index}
                 image={hotel.image}
-                address={hotel.address}
+                addresse={hotel.addresse}
                 nom={hotel.nom}
                 prix={hotel.prix}
               />

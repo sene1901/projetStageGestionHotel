@@ -1,6 +1,6 @@
 import React from "react";
 
-const HotelCard = ({ image, nom, address, prix }) => {
+const HotelCard = ({ image, nom, addresse, prix }) => {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden w-[240px]">
       
@@ -14,7 +14,7 @@ const HotelCard = ({ image, nom, address, prix }) => {
       {/* Contenu */}
       <div className="p-4">
         <p className="text-sm text-[#8D4B38]">
-          {address}
+          {addresse}
         </p>
 
         <h3 className="text-lg font-bold text-gray-800 mt-1">

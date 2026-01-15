@@ -35,7 +35,7 @@ const Dashboard = () => {
             value="125"
             label="Formulaires"
             description="Je ne sais pas quoi mettre"
-            color="bg-purple-500"
+            color="bg-[#A88ADD]"
           />
 
           <DashCard
@@ -43,7 +43,7 @@ const Dashboard = () => {
             value="40"
             label="Messages"
             description="Je ne sais pas quoi mettre"
-            color="bg-teal-500"
+            color="bg-[#0CC2AA]"
           />
 
           <DashCard
@@ -67,7 +67,7 @@ const Dashboard = () => {
             value="40"
             label="Hôtels"
             description="Je ne sais pas quoi mettre"
-            color="bg-fuchsia-500"
+            color="bg-[#9C27B0]"
           />
 
           <DashCard
@@ -75,7 +75,7 @@ const Dashboard = () => {
             value="02"
             label="Entités"
             description="Je ne sais pas quoi mettre"
-            color="bg-blue-600"
+            color="bg-[#1565C0]"
           />
 
         </div>

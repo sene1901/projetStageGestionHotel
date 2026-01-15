@@ -3,7 +3,7 @@ import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { Search, Bell, User, LogOut } from "lucide-react";
 import { useSidebar } from "../context/SidebarContext";
-
+import profil from "../assets/images/profil.jpg"
 const Header = () => {
   const { setOpen } = useSidebar();
   const location = useLocation();
@@ -51,7 +51,11 @@ const Header = () => {
         </div>
 
         <Bell size={20} className="text-gray-600" />
-        <User size={18} className="text-gray-600" />
+        <img
+                src={profil}
+                alt="user"
+                className="w-9 h-9 rounded-full"
+              />
         <LogOut size={18} className="text-gray-500" />
       </div>
     </header>

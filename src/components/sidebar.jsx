@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { ComputerDesktopIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 import { useSidebar } from "../context/SidebarContext";
+import bgSidebar from "../assets/images/bg.jpg"; 
 
 const Sidebar = () => {
   const { open, setOpen } = useSidebar();
@@ -24,7 +25,7 @@ const Sidebar = () => {
         />
       )}
 
-      <aside
+        <aside
         className={`
           fixed z-50 inset-y-0 left-0 w-70 bg-gray-700 text-white
           transform transition-transform duration-300 
@@ -32,7 +33,9 @@ const Sidebar = () => {
           md:static md:translate-x-0
           flex flex-col
           pb-4
+          bg-cover bg-center
         `}
+        style={{ backgroundImage: `url(${bgSidebar})` }}
       >
         {/* Logo */}
         <div className="px-6 py-5 font-semibold border-b border-gray-600">
@@ -40,7 +43,7 @@ const Sidebar = () => {
         </div>
 
         {/* Menu */}
-        <nav className="px-4 py-4 space-y-2 text-sm flex flex-col">
+        <nav className="px-4 py-4 space-y-2 text-sm flex flex-col ">
           <NavLink to="/dashboard" className={linkClass} onClick={() => setOpen(false)}>
             <Squares2X2Icon className={iconClass} />
             Dashboard

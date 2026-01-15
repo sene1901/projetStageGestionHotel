@@ -2,7 +2,7 @@ import React from "react";
 
 const HotelCard = ({ image, nom, address, prix }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden w-[230px]">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden w-[240px]">
       
       {/* Image */}
       <img
@@ -21,7 +21,7 @@ const HotelCard = ({ image, nom, address, prix }) => {
           {nom}
         </h3>
 
-        <p className="text-base font-medium text-gray-700 mt-3">
+        <p className="text-base font-medium text-gray-700 mt-2">
           {prix} XOF par nuit
         </p>
       </div>

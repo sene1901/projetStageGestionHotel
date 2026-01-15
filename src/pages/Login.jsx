@@ -53,7 +53,7 @@ const Login = () => {
           </h1>
         </div>
 
-        <div className=" w-full max-w-sm sm:max-w-md bg-white rounded-lg shadow-xl p-6 sm:p-8">
+        <div className=" max-w-sm sm:max-w-md bg-white rounded-lg shadow-xl p-6 sm:p-8">
         <h2 className="text-center text-gray-700 mb-6 text-sm sm:text-base">
           Connectez-vous en tant que <span className="font-semibold">Admin</span>
         </h2>

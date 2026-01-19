@@ -7,30 +7,35 @@ import HotelList from "./pages/HotelList";
 import Register from "./pages/Register";
 import MotDePasseOublie from "./pages/MotDePasseOublie";
 import Layout from "./components/Layout"; 
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <AuthProvider>
+        <Routes>
+          {/* Pages publiques */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<MotDePasseOublie />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Routes publiques (sans Sidebar/Header) */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot-password" element={<MotDePasseOublie />} />
-        <Route path="/register" element={<Register />} />
+          {/* Pages privées avec Layout */}
+          <Route
+            element={
+              <PrivateRoute>
+                <Layout />
+              </PrivateRoute>
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/hotels" element={<HotelList />} />
+          </Route>
 
-        {/* Toutes les autres utilisent le Layout */}
-        <Route element={<Layout />}>
-
-          {/* Routes qui garderont Header + Sidebar */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/hotels" element={<HotelList />} />
-
-        </Route>
-
-        {/* Redirection par défaut */}
-        <Route path="*" element={<Navigate to="/login" />} />
-
-      </Routes>
+          {/* Redirection par défaut */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

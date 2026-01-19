@@ -1,8 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
+import { register } from "../api/api"; 
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await register(formData);
+      navigate("/"); // retour login
+    } catch (error) {
+      console.log("ERREUR LARAVEL 422 ");
+       console.log(error.response?.data);
+      alert("Erreur lors de l'inscription");
+    }
+  };
+
   return (
     <AuthLayout>
       {/* Logo */}
@@ -20,7 +49,7 @@ const Register = () => {
         </h2>
 
         {/* Form */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Nom */}
           <div className="text-left">
             <label className="block text-xs sm:text-sm text-gray-400 mb-1">
@@ -28,7 +57,11 @@ const Register = () => {
             </label>
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               className="w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline-none focus:border-gray-700"
+              required
             />
           </div>
 
@@ -39,7 +72,11 @@ const Register = () => {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline-none focus:border-gray-700"
+              required
             />
           </div>
 
@@ -50,13 +87,17 @@ const Register = () => {
             </label>
             <input
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline-none focus:border-gray-700"
+              required
             />
           </div>
 
           {/* Terms */}
           <div className="flex items-center text-xs sm:text-sm text-gray-600">
-            <input type="checkbox" className="mr-2 accent-gray-800" />
+            <input type="checkbox" className="mr-2 accent-gray-800" required />
             Accepter les termes et la politique
           </div>
 
@@ -68,16 +109,15 @@ const Register = () => {
             S inscrire
           </button>
         </form>
-
-       
       </div>
-       {/* Footer link */}
-        <div className="mt-6 text-xs sm:text-sm text-white text-center">
-          Vous avez déjà un compte ?{" "}
-          <Link to="/" className="text-yellow-500 hover:underline">
-            Se connecter
-          </Link>
-        </div>
+
+      {/* Footer link */}
+      <div className="mt-6 text-xs sm:text-sm text-white text-center">
+        Vous avez déjà un compte ?{" "}
+        <Link to="/" className="text-yellow-500 hover:underline">
+          Se connecter
+        </Link>
+      </div>
     </AuthLayout>
   );
 };

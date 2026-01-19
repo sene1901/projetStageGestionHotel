@@ -1,17 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  Squares2X2Icon,
-  ComputerDesktopIcon,
-} from "@heroicons/react/24/outline";
+import { Squares2X2Icon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { useSidebar } from "../context/SidebarContext";
 import bgSidebar from "../assets/images/bg.jpg";
 import { BookmarkIcon } from "@heroicons/react/24/solid";
-
-import profil from "../assets/images/profil.jpg"
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
   const { open, setOpen } = useSidebar();
+  const { user } = useAuth();
 
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-2 rounded-md transition
@@ -45,20 +42,16 @@ const Sidebar = () => {
         `}
         style={{ backgroundImage: `url(${bgSidebar})` }}
       >
-        {/*  Overlay couleur + opacité */}
+        {/* Overlay couleur + opacité */}
         <div className="absolute inset-0 bg-[#494C4F]/80" />
 
         {/* Contenu */}
         <div className="relative flex flex-col h-full text-white">
           {/* Logo */}
-        
-<div className="flex items-center gap-2 px-5 py-4 border-b border-white/20">
-  <BookmarkIcon className="w-6 h-6 text-white-500" />
-  <span className="font-semibold tracking-wide">
-    RED PRODUCT
-  </span>
-</div>
-
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-white/20">
+            <BookmarkIcon className="w-6 h-6 text-white-500" />
+            <span className="font-semibold tracking-wide">RED PRODUCT</span>
+          </div>
 
           {/* Section */}
           <div className="px-5 py-3 text-xs text-gray-300 uppercase">
@@ -89,15 +82,19 @@ const Sidebar = () => {
           {/* User */}
           <div className="mt-auto px-4 py-4 border-t border-white/20">
             <div className="flex items-center gap-3">
-              <img
-                src={profil}
-                alt="user"
-                className="w-9 h-9 rounded-full"
-              />
+             
+                    <img
+  src={
+    user?.imageprofil
+      ? `http://127.0.0.1:8000/storage/${user.imageprofil}`
+      : "/default-profil.jpg"
+  }
+  alt="user"
+  className="w-9 h-9 rounded-full cursor-pointer"
+/>
+
               <div>
-                <div className="text-sm font-medium">
-                  sadio Sene
-                </div>
+                <div className="text-sm font-medium">{user?.name || "Utilisateur"}</div>
                 <div className="flex items-center gap-1 text-xs text-green-400">
                   <span className="text-lg leading-none">●</span> en ligne
                 </div>

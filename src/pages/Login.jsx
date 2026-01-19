@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import AuthLayout from "../components/AuthLayout";
+import { login } from "../api/api";
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -34,13 +36,38 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!validate()) return;
+  if (!validate()) return;
 
+  try {
+    const response = await login({
+      email,
+      password,
+    });
+
+  
+    localStorage.setItem("token", response.data.token);
+
+  
     navigate("/dashboard");
-  };
+  } catch (error) {
+    console.log("Erreur login:", error.response?.data);
+
+    if (error.response?.status === 401) {
+      setErrors({
+        email: "Email ou mot de passe incorrect",
+        password: "Email ou mot de passe incorrect",
+      });
+    } else if (error.response?.status === 422) {
+      setErrors(error.response.data.errors || {});
+       alert("Connection reussie");
+    } else {
+      alert("Erreur serveur, réessayez plus tard");
+    }
+  }
+};
 
   return (
      <AuthLayout>
@@ -115,7 +142,7 @@ const Login = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-[#494C4F] text-white py-2 rounded-md hover:bg-gray-900 transition text-sm sm:text-base"
+            className="w-full bg-[#494C4F] text-white py-2 rounded-md hover:bg-gray-900 transition text-sm sm:text-base cursor-pointer"
           >
             Se connecter
           </button>

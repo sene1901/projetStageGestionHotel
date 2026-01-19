@@ -1,20 +1,21 @@
 import React from "react";
 
-const HotelCard = ({ image, nom, addresse, prix }) => {
+const HotelCard = ({ image, nom, adresse, prix }) => {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden w-[240px]">
       
       {/* Image */}
-      <img
-        src={image}
-        alt={nom}
-        className="h-48 w-full object-cover"
-      />
+     <img
+  src={image || "/default-hotel.jpg"} 
+  alt={nom}
+  className="w-full h-48 object-cover "
+/>
+
 
       {/* Contenu */}
       <div className="p-4">
         <p className="text-sm text-[#8D4B38]">
-          {addresse}
+          {adresse}
         </p>
 
         <h3 className="text-lg font-bold text-gray-800 mt-1">

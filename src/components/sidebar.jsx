@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Squares2X2Icon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { useSidebar } from "../context/SidebarContext";

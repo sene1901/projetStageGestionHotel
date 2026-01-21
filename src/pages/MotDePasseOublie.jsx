@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
+import { forgotPassword } from "../api/api"; 
 
 const MotDePasseOublie = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await forgotPassword({ email });
+      alert(" Email de réinitialisation envoyé !");
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          "Erreur lors de l’envoi de l’email"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthLayout>
-      <div className="flex flex-col items-center justify-center  px-4">
-
+      <div className="flex flex-col items-center justify-center px-4">
         {/* Logo */}
         <div className="mb-6 text-center">
           <h1 className="text-white font-semibold tracking-wide text-lg">
@@ -25,7 +45,7 @@ const MotDePasseOublie = () => {
             instructions sur la façon de modifier votre mot de passe.
           </p>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Email */}
             <div className="text-left">
               <label className="block text-xs sm:text-sm text-gray-500 mb-1">
@@ -33,6 +53,9 @@ const MotDePasseOublie = () => {
               </label>
               <input
                 type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline-none focus:ring-0 focus:border-gray-700"
               />
             </div>
@@ -40,23 +63,23 @@ const MotDePasseOublie = () => {
             {/* Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-gray-700 text-white py-2 rounded hover:bg-gray-800 transition text-sm sm:text-base"
             >
-              Envoyer
+              {loading ? "Envoi..." : "Envoyer"}
             </button>
           </form>
         </div>
 
-        {/* Lien “Revenir à la connexion” */}
+        {/* Lien retour */}
         <div className="mt-6 text-center text-xs sm:text-sm">
           <Link
-            to="/"
-            className="text-gray-500 hover:text-yellow-500 transition"
+            to="/login"
+            className="text-yellow-500 hover:text-yellow-500 transition"
           >
             Revenir à la <span className="text-yellow-500">connexion</span>
           </Link>
         </div>
-
       </div>
     </AuthLayout>
   );

@@ -9,6 +9,9 @@ import MotDePasseOublie from "./pages/MotDePasseOublie";
 import Layout from "./components/Layout"; 
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
+import ResetPassword from "./pages/ResetPassword";
+
+
 
 function App() {
   return (
@@ -17,8 +20,10 @@ function App() {
         <Routes>
           {/* Pages publiques */}
           <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<MotDePasseOublie />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<MotDePasseOublie />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+         
 
           {/* Pages privées avec Layout */}
           <Route

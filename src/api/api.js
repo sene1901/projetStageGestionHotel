@@ -28,6 +28,9 @@ export const login = (data) => API.post("/login", data);
 export const register = (data) => API.post("/register", data);
 export const logout = () => API.post("/logout");
 export const getProfile = () => API.get("/user");
+export const forgotPassword = (data) => API.post("/forgot-password", data);
+export const resetPassword = (data) => API.post("/reset-password", data);
+
 // Notifications
 export const getNotifications = () => API.get("/notifications");
 export const markNotificationRead = (id) => API.post(`/notifications/mark-read/${id}`);

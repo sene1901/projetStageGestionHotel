@@ -60,7 +60,7 @@ const handleProfileClick = () => {
 
   return (
     <header className="flex items-center justify-between px-4 md:px-6 py-4 bg-white border-b border-gray-300">
-      {/* Left */}
+    
       <div className="flex items-center gap-3">
         <button onClick={() => setOpen(true)} className="md:hidden text-gray-600">
           <Menu size={22} />
@@ -76,7 +76,7 @@ const handleProfileClick = () => {
         </div>
       </div>
 
-      {/* Right */}
+      
       <div className="flex items-center gap-3 md:gap-4">
         <div className="relative hidden md:block">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -119,7 +119,7 @@ const handleProfileClick = () => {
        <img
   src={
     user?.imageprofil
-      ? `http://127.0.0.1:8000/storage/${user.imageprofil}`
+      ? `https://backend-laravel-hotel.up.railway.app/storage/${user.imageprofil}`
       : "/default-profil.jpg"
   }
   alt="user"

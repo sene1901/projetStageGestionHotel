@@ -5,8 +5,8 @@ import { createHotel, updateHotel } from "../api/api";
 const AjoutHotelModal = ({ onClose, hotel = null, onSuccess }) => {
   
   const [form, setForm] = useState({
-    nom: hotel?.nom || "",
-    adresse: hotel?.adresse || "",
+    name: hotel?.name|| "",
+    description: hotel?.description || "",
     email: hotel?.email || "",
     telephone: hotel?.telephone || "",
     prix: hotel?.prix || "",
@@ -21,8 +21,8 @@ const AjoutHotelModal = ({ onClose, hotel = null, onSuccess }) => {
   const validate = () => {
     const e = {};
 
-    if (!form.nom.trim()) e.nom = "Nom obligatoire";
-    if (!form.adresse.trim()) e.adresse = "Adresse obligatoire";
+    if (!form.name.trim()) e.name = "Nom obligatoire";
+    if (!form.description.trim()) e.description = "description obligatoire";
     if (!form.email) {
       e.email = "Email obligatoire";
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
@@ -46,33 +46,27 @@ const AjoutHotelModal = ({ onClose, hotel = null, onSuccess }) => {
 
   
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+  e.preventDefault();
+  if (!validate()) return;
 
-    try {
-      const formDataToSend = new FormData();
-      for (const key in form) {
-        formDataToSend.append(key, form[key]);
-      }
+  try {
+    const formDataToSend = new FormData();
+    for (const key in form) formDataToSend.append(key, form[key]);
+    if (imageFile) formDataToSend.append("image", imageFile);
 
-      if (imageFile) {
-        formDataToSend.append("image", imageFile);
-      }
-
-      if (hotel) {
-        // Modifier hôtel
-        await updateHotel(hotel.id, formDataToSend);
-      } else {
-        // Ajouter hôtel
-        await createHotel(formDataToSend);
-      }
-
-      if (onSuccess) onSuccess(); // rafraîchir la liste
-      onClose();
-    } catch (error) {
-      console.error("Erreur hôtel:", error.response?.data);
+    if (hotel) {
+      await updateHotel(hotel.id, formDataToSend);
+    } else {
+      await createHotel(formDataToSend);
     }
-  };
+
+    if (onSuccess) onSuccess(); 
+    onClose();
+  } catch (error) {
+    console.error("Erreur hôtel:", error.response?.data || error.message);
+  }
+};
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -104,26 +98,26 @@ const AjoutHotelModal = ({ onClose, hotel = null, onSuccess }) => {
               <input
                 type="text"
                 className={`w-full mt-1 px-3 py-2 border rounded-md ${
-                  errors.nom && "border-red-500"
+                  errors.name && "border-red-500"
                 }`}
-                value={form.nom}
-                onChange={(e) => setForm({ ...form, nom: e.target.value })}
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
-              {errors.nom && <p className="text-xs text-red-500">{errors.nom}</p>}
+              {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
             </div>
 
-            {/* Adresse */}
+            {/* description */}
             <div>
-              <label className="text-sm text-gray-600">Adresse</label>
+              <label className="text-sm text-gray-600">adresse</label>
               <input
                 type="text"
                 className={`w-full mt-1 px-3 py-2 border rounded-md ${
-                  errors.adresse && "border-red-500"
+                  errors.description && "border-red-500"
                 }`}
-                value={form.adresse}
-                onChange={(e) => setForm({ ...form, adresse: e.target.value })}
+                value={form.description}
+                onChange={(e) => setForm({ ...form, description: e.target.value })}
               />
-              {errors.adresse && <p className="text-xs text-red-500">{errors.adresse}</p>}
+              {errors.description && <p className="text-xs text-red-500">{errors.description}</p>}
             </div>
 
             {/* Email */}

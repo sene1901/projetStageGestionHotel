@@ -1,10 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { getProfile, login as loginApi, logout as logoutApi } from "../api/api";
+import { createContext, useContext, useEffect, useState } from "react";
+import { getProfile, login as apiLogin, logout as apiLogout } from "../api/api";
 
 const AuthContext = createContext(null);
 
@@ -12,11 +7,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //  Fetch profil
+  // Récupérer le profil si access_token existe
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
+      const access = localStorage.getItem("access_token");
+      if (!access) {
         setLoading(false);
         return;
       }
@@ -25,7 +20,8 @@ export const AuthProvider = ({ children }) => {
         const res = await getProfile();
         setUser(res.data);
       } catch (err) {
-        localStorage.removeItem("token");
+        console.error("Erreur fetch profile:", err.response?.data || err.message);
+        localStorage.clear();
         setUser(null);
       } finally {
         setLoading(false);
@@ -35,20 +31,36 @@ export const AuthProvider = ({ children }) => {
     fetchProfile();
   }, []);
 
-  //  Login
+  // Login avec email/password
   const login = async (data) => {
-    const res = await loginApi(data);
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
+    try {
+      const res = await apiLogin(data);
+      const { access, refresh, user } = res.data;
+
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setUser(user);
+    } catch (err) {
+      console.error("Erreur login:", err.response?.data || err.message);
+      throw err; // pour que le formulaire login affiche l'erreur
+    }
   };
 
-  //deconnecter
+  // Logout
   const logout = async () => {
     try {
-      await logoutApi();
-    } catch (e) {}
-    localStorage.removeItem("token");
-    setUser(null);
+      await apiLogout(); // pas besoin de passer refresh, il est lu directement dans api.js
+    } catch (err) {
+      console.error("Erreur logout:", err.response?.data || err.message);
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+      setUser(null);
+      window.location.href = "/login"; // redirection vers login
+    }
   };
 
   return (

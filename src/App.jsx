@@ -18,28 +18,36 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Pages publiques */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<MotDePasseOublie />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-         
 
-          {/* Pages privées avec Layout */}
-          <Route
-            element={
-              <PrivateRoute>
-                <Layout />
-              </PrivateRoute>
-            }
-          >
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/hotels" element={<HotelList />} />
-          </Route>
+  {/* Pages publiques */}
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+  <Route path="/forgot-password" element={<MotDePasseOublie />} />
+  <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-          {/* Redirection par défaut */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
+  {/* REDIRECTION ROOT */}
+  <Route
+    path="/"
+    element={<Navigate to="/dashboard" replace />}
+  />
+
+  {/* Pages privées */}
+  <Route
+    element={
+      <PrivateRoute>
+        <Layout />
+      </PrivateRoute>
+    }
+  >
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/hotels" element={<HotelList />} />
+  </Route>
+
+  {/* Fallback */}
+  <Route path="*" element={<Navigate to="/" replace />} />
+
+</Routes>
+
       </AuthProvider>
     </BrowserRouter>
   );

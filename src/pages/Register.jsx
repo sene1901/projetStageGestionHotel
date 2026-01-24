@@ -7,10 +7,12 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+
 
   const handleChange = (e) => {
     setFormData({
@@ -20,22 +22,35 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  setError(""); // reset erreur
 
-    try {
-      await register(formData);
-      navigate("/"); // retour login
-    } catch (error) {
-      console.log("ERREUR LARAVEL 422 ");
-       console.log(error.response?.data);
-      alert("Erreur lors de l'inscription");
+  try {
+    await register(formData);
+    alert("Inscription réussie !");
+    navigate("/");
+  } catch (error) {
+    console.log("ERREUR Django :", error.response?.data);
+
+    const data = error.response?.data;
+
+    if (data?.username) {
+      setError(data.username[0]);
+    } else if (data?.email) {
+      setError(data.email[0]);
+    } else if (data?.password) {
+      setError(data.password[0]);
+    } else {
+      setError("Erreur lors de l'inscription");
     }
-  };
+  }
+};
+
 
   return (
     <AuthLayout>
       {/* Logo */}
-      <div className="mb-5 text-center ">
+      <div className="mb-5 text-center">
         <h1 className="text-white font-bold tracking-wide text-lg">
           RED PRODUCT
         </h1>
@@ -43,10 +58,14 @@ const Register = () => {
 
       {/* Form container */}
       <div className="w-full bg-white rounded-md shadow-xl p-6 sm:p-8 text-center">
-        {/* Title */}
         <h2 className="text-[#494C4F] mb-5 text-sm sm:text-base">
           Inscrivez-vous en tant que <span className="font-semibold">Admin</span>
         </h2>
+{error && (
+  <div className="mb-4 text-red-600 text-xs sm:text-sm text-center">
+    {error}
+  </div>
+)}
 
         {/* Form */}
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -57,8 +76,8 @@ const Register = () => {
             </label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               className="w-full border-0 border-b border-gray-300 py-2 text-sm focus:outline-none focus:border-gray-700"
               required

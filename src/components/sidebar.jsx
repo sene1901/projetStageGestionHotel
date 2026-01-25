@@ -127,11 +127,11 @@ const Sidebar = () => {
   const { open, setOpen } = useSidebar();
   const { user } = useAuth();
 
-  const [avatar, setAvatar] = useState(user?.imageprofil ? `http://127.0.0.1:8000/media/${user.imageprofil}` : "/default-profil.jpg");
+  const [avatar, setAvatar] = useState(user?.imageprofil ? `https://django-gestion-hotel.onrender.com/media/${user.imageprofil}` : "/default-profil.jpg");
 
 useEffect(() => {
   if (user?.imageprofil) {
-    setAvatar(`http://127.0.0.1:8000${user.imageprofil}`); // chemin relatif local
+    setAvatar(`https://django-gestion-hotel.onrender.com${user.imageprofil}`); // chemin relatif local
   } else {
     setAvatar("/default-profil.jpg");
   }

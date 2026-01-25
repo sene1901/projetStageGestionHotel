@@ -188,7 +188,7 @@ const Header = () => {
 
   const [notifications, setNotifications] = useState([]);
   const [avatar, setAvatar] = useState(
-    user?.imageprofil ? `http://127.0.0.1:8000/media/${user.imageprofil}` : "/default-profil.jpg"
+    user?.imageprofil ? `https://django-gestion-hotel.onrender.com/media/${user.imageprofil}` : "/default-profil.jpg"
   );
 
   // Titres des pages
@@ -237,7 +237,7 @@ const handleChangeAvatar = async (e) => {
     
     const newAvatar = res.data.imageprofil.startsWith("http")
       ? res.data.imageprofil
-      : `http://127.0.0.1:8000${res.data.imageprofil}`; 
+      : `https://django-gestion-hotel.onrender.com${res.data.imageprofil}`; 
 
     setAvatar(newAvatar);
 
@@ -253,7 +253,7 @@ const handleChangeAvatar = async (e) => {
   // Met à jour l'avatar si user change (ex: login ou update image)
   useEffect(() => {
     if (user?.imageprofil) {
-      setAvatar(`http://127.0.0.1:8000/media/${user.imageprofil}`);
+      setAvatar(`https://django-gestion-hotel.onrender.com/media/${user.imageprofil}`);
     } else {
       setAvatar("/default-profil.jpg");
     }
